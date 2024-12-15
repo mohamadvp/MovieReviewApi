@@ -10,10 +10,10 @@ class MovieSerializer(serializers.ModelSerializer):
 class ReviewSerializer(serializers.ModelSerializer):
     movie = serializers.SerializerMethodField()
     director = serializers.SerializerMethodField()
-    user = serializers.SerializerMethodField()
+    username = serializers.SerializerMethodField()
     class Meta:
         model= Review
-        fields = ['movie','director','comment', 'user']
+        fields = ['movie','director','comment', 'username','user']
     def get_movie(self,obj):
         return obj.movie.title
     def get_director(self,obj):
