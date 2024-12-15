@@ -1,8 +1,8 @@
 from rest_framework import generics,status
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from django.contrib.auth.models import User
 from .models import Review, Movie
-from .serializers import MovieSerializer,ReviewSerializer,UserSerializer
+from .serializers import MovieSerializer,ReviewSerializer
 
 
 class MovieList(generics.ListAPIView):
@@ -40,9 +40,10 @@ class MovieReview(generics.ListAPIView):
 class ReviewCreate(generics.CreateAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
-
+    permission_classes = [IsAuthenticated]
     
-class UserCreate(generics.CreateAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+    def perform_create(self, serializer):
+        movie_id = self.kwargs['movie_']
+        movie = Movie.objects.get(id=movie_id)
+        serializer.save(movie=movie, user=self.request.user)
     

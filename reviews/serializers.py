@@ -8,30 +8,8 @@ class MovieSerializer(serializers.ModelSerializer):
         fields = '__all__'
         
 class ReviewSerializer(serializers.ModelSerializer):
-    movie = serializers.SerializerMethodField()
-    director = serializers.SerializerMethodField()
-    username = serializers.SerializerMethodField()
+    movie = serializers.StringRelatedField(read_only=True)
+    user = serializers.StringRelatedField(read_only=True)
     class Meta:
         model= Review
-        fields = ['movie','director','comment', 'username','user']
-    def get_movie(self,obj):
-        return obj.movie.title
-    def get_director(self,obj):
-        return obj.movie.director
-    
-    def get_user(self,obj):
-        return obj.user.username
-                
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ('username','password','first_name','last_name','email')
-    def create(self, validated_data):
-        user = User.objects.create_user(
-            username=validated_data['username'],
-            password=validated_data['password'],
-            first_name=validated_data['first_name'],
-            last_name=validated_data['last_name'],
-            email=validated_data['email']
-        )
-        return user
+        fields = "__all__"
