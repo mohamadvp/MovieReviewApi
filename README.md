@@ -44,7 +44,7 @@ http://127.0.0.1:8000/api/movies/create
 `endpoints`: /api/movie/action
 
 ```bash
-http://127.0.0.1:8000/api/movies/action
+http://127.0.0.1:8000/api/movies/genre/action
 ```
 
 ### create reviews
