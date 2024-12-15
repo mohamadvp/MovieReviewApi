@@ -1,4 +1,5 @@
-from rest_framework import generics
+from rest_framework import generics,status
+from rest_framework.response import Response
 from django.contrib.auth.models import User
 from .models import Review, Movie
 from .serializers import MovieSerializer,ReviewSerializer,UserSerializer
@@ -22,6 +23,12 @@ class MovieGenre(generics.ListAPIView):
     def get_queryset(self):
         genre = self.kwargs["genre"]
         return Movie.objects.filter(genre__icontains=genre)
+    def list(self, request, *args, **kwargs):
+        queryset= self.get_queryset()
+        if not queryset.exists():
+            return Response({"status":"not found", "message": "No movies found for this genre."}, status=status.HTTP_404_NOT_FOUND)
+        serilaizer = self.get_serializer(queryset, many=True)
+        return Response(serilaizer.data)
 
 class MovieReview(generics.ListAPIView):
     serializer_class = ReviewSerializer
