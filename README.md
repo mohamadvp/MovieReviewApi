@@ -1,7 +1,7 @@
 # Movie Review Api
 
 ## Description 
-this project implements *movie review api* allows the client to mange the movie and their reviews.
+this project implements **movie review api** allows the client to mange the movie and their reviews.
 
 ## Features
 Movies: Create, list, update, delete, and filter movies by genre.
@@ -23,6 +23,17 @@ pip install rest_framework
 
 
 ## Usage
+
+### create a user and get an authentication token
+
+run
+```bash
+python manage.py drf_create_token <your_username>
+```
+if you are using postman 
+
+- **Authorization**: Token your_token
+- **Content-Type**: application/json
 
 ### list all movies
 
